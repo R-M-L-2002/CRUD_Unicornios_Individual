@@ -4,7 +4,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 export const UnicornContext = createContext();
 
 // API
-const BASE_URL = "https://crudcrud.com/api/4774eccb46814d2dacf8d202ce73b768/unicorns";
+const BASE_URL = "https://crudcrud.com/api/febff7b976e542d28142810bc5d58687/unicorns";
 
 // envuelve componentes hijos con datos globales
 export const UnicornProvider = ({ children }) => {
