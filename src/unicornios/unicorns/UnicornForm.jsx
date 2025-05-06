@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; //useParams: para acceder a los parametros de la URL, como el id
+import { useParams, useNavigate, Link } from "react-router-dom"; //useParams: para acceder a los parametros de la URL, como el id
 import { Button, InputText, InputNumber, Card } from "primereact";
 import { useUnicorns } from "../../context/UnicornContext";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -89,10 +89,16 @@ const UnicornForm = () => {
             <Field name="power" id="power" as={InputText} />
             <ErrorMessage name="power" component="small" className="p-error" />
           </div>
-
-          <Button type="submit" label="Guardar" className="mt-2" />
-        </Form>
+          <div>      
+            <Button type="submit" label="Guardar" />
+          </div>
+        </Form> 
       </Formik>
+      <Link to="/unicornios">
+            <Button 
+            label="Volver" 
+            />
+          </Link> 
     </Card>
   );
 }

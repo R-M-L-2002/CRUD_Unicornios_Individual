@@ -25,36 +25,11 @@ const ProductsView = () => {
         'products', 
         JSON.stringify(updatedProducts))
     }
-  
-    const actionTemplate = (rowData) => {
-      return (
-        <div className="flex gap-2">
-          <Link to={`/productos/editar/${rowData.id}`}>
-            <Button 
-            icon="pi pi-pencil" 
-            className="p-button-rounded p-button-info" />
-          </Link>
-          <Button
-            icon="pi pi-trash"
-            className="p-button-rounded p-button-danger"
-            onClick={() => deleteProduct(rowData.id)}
-          />
-        </div>
-      );
-    };
-  
+
     return (
       <div>
         <h1>🌷✨🪷Productos🌷✨🪷</h1>
         <Card>
-          <div>
-            <Link to="/productos/crear">
-              <Button 
-              label="Crear Nuevo Producto" 
-              icon="pi pi-plus" />
-            </Link>
-          </div>
-  
           <DataTable value={products} stripedRows showGridlines rows={3}>
             <Column 
             field="name" 
@@ -63,12 +38,37 @@ const ProductsView = () => {
             <Column 
             field="price" 
             header="Precio" 
+            style={{ width: '120px' }}
             body={(rowData) => 
             `$${rowData.price}`} />
-            <Column 
-            header="Acciones" 
-            body={actionTemplate} />
+            <Column
+              header="Acciones"
+              body={(rowData) => (
+                <>
+                  <Link to={`/productos/editar/${rowData.id}`}>
+                    <Button icon="pi pi-pencil" 
+                    className="p-button-info p-button-sm" 
+                  />
+                  </Link>
+                  <Button
+                    icon="pi pi-trash"
+                    className="p-button-danger p-button-sm"
+                    onClick={() => deleteProduct(rowData.id)}  
+                  />
+                </>
+              )}
+            />
           </DataTable>
+          <Link to="/productos/crear">
+            <Button 
+            label="Crear Nuevo Producto" 
+            icon="pi pi-plus" />
+          </Link>
+          <Link to="/">
+            <Button 
+            label="Volver" 
+            />
+          </Link>  
         </Card>
       </div>
     );

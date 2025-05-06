@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { InputText, InputNumber, Button, Card } from 'primereact';
 
 const ProductForm = () => {
@@ -76,6 +76,11 @@ const ProductForm = () => {
             "Crear Producto"} 
             icon="pi pi-check" />
         </form>
+        <Link to="/productos">
+            <Button 
+            label="Volver" 
+            />
+          </Link>
       </Card>
     </div>
     
