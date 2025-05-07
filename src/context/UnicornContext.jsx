@@ -1,10 +1,8 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import api from "../api/axiosInstance";
 
 // Contexto
 export const UnicornContext = createContext();
-
-// API
-const BASE_URL = "https://crudcrud.com/api/460a84ae38094d639be6499b54e47e95/unicorns";
 
 // envuelve componentes hijos con datos globales
 export const UnicornProvider = ({ children }) => {
@@ -16,13 +14,12 @@ export const UnicornProvider = ({ children }) => {
   const getUnicorns = async () => {
     setLoading(true);
     try {
-      const response = await fetch(BASE_URL);
-      const data = await response.json();
-      setUnicorns(data);
+      const response = await api.get("/");
+      setUnicorns(response.data);
     } catch (e) {
       setError(e.message);
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -30,28 +27,19 @@ export const UnicornProvider = ({ children }) => {
   const createUnicorn = async (newUnicorn) => {
     setLoading(true);
     try {
-      const response = await fetch(BASE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUnicorn),
-      });
-      const data = await response.json();
-      setUnicorns((prev) => [...prev, data])
+      const response = await api.post("/", newUnicorn);
+      setUnicorns((prev) => [...prev, response.data])
     } catch (e) {
       setError(e.message);
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
   // Editar
   const editUnicorn = async (id, updatedUnicorn) => {
     try {
-      await fetch(`${BASE_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedUnicorn),
-      });
+      await api.put(`/${id}`, updatedUnicorn);
       setUnicorns((prev) =>
         prev.map((u) => (u._id === id ? { ...updatedUnicorn, _id: id } : u))
       );
@@ -63,24 +51,21 @@ export const UnicornProvider = ({ children }) => {
   // Eliminar
   const deleteUnicorn = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
-      if (response.ok) {
-        setUnicorns((prev) => prev.filter((u) => u._id !== id));
-      } else {
-        throw new Error("No se pudo eliminar el unicornio.");
-      }
+      await api.delete(`/${id}`);
+      setUnicorns((prev) => 
+        prev.filter((u) => u._id !== id));
     } catch (e) {
-      setError(e.message);
+      setError(e.message)
     }
   }
 
   const getUnicornById = (id) => {
-    return unicorns.find((u) => u._id === id);
+    return unicorns.find((u) => u._id === id)
   }
 
   // Cargar unicornios
   useEffect(() => {
-    getUnicorns();
+    getUnicorns()
   }, [])
 
   return (

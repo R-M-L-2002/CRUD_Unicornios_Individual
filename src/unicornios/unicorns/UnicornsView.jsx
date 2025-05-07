@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useUnicorns } from "../../context/UnicornContext";
 import { Button, DataTable, Column, Card } from "primereact";
+import { exportToPdf } from "../../utils/ExportToPDF";
 
 const UnicornsView = () => {
   const { unicorns, deleteUnicorn } = useUnicorns();
@@ -64,6 +65,12 @@ const UnicornsView = () => {
             label="Volver" 
             />
           </Link>
+          <Button 
+            label="Exportar PDF" 
+            icon="pi pi-file-pdf" 
+            className="p-button-danger"
+            onClick={() => exportToPdf(unicorns)}
+          />
         </div>
       </Card>
     </div>
